@@ -41,23 +41,42 @@
 
 <script>
 export default {
+  
+ 
   name: 'Home',
   components: {
     
   },
   data(){
+    
+   
     return {
       //任务input
       currentTask:'',
-      prolist:[],             //使用prolist记录所有的数据  newlist经过filter然后用来展示v-for渲染的内容 
+      prolist:[],          //使用prolist记录所有的数据  newlist经过filter然后用来展示v-for渲染的内容 
       newList:[],
       itemIsDelect:false,     
       curindex:null,           //用来记录选中哪一项 给 li 动态添加class
-      beforeEditText:''       
-
+      beforeEditText:''   ,    
+      
     }
   },
+  watch:{
+    prolist:{
+            handler:function(){
+                this.saveList("storeData",this.prolist);
+            },
+            deep:true
+        }
+
+  },
   methods:{
+    saveList(key,value){
+      localStorage.setItem(key,JSON.stringify(value))
+    },
+    fetchList(key){
+      return JSON.parse(localStorage.getItem(key))
+    },
     //输入框按下回车 
     enter(){
       if(this.currentTask == '') return
@@ -122,7 +141,9 @@ export default {
     }
   },
    mounted(){
+      this.prolist = this.fetchList('storeData')
       this.newList = this.prolist
+
     },
 }
 </script>
