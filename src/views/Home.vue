@@ -66,7 +66,8 @@ export default {
             handler:function(){
                 this.saveList("storeData",this.prolist);
             },
-            deep:true
+            deep:true,
+            
         }
 
   },
@@ -75,7 +76,7 @@ export default {
       localStorage.setItem(key,JSON.stringify(value))
     },
     fetchList(key){
-      return JSON.parse(localStorage.getItem(key))
+      return JSON.parse(localStorage.getItem(key)) || []
     },
     //输入框按下回车 
     enter(){
@@ -141,9 +142,8 @@ export default {
     }
   },
    mounted(){
-      this.prolist = this.fetchList('storeData')
-      this.newList = this.prolist
-
+      this.prolist = this.fetchList('storeData')     
+      this.newList = this.prolist 
     },
 }
 </script>
